@@ -1,0 +1,88 @@
+% !TeX program = lualatex
+\documentclass{proceedings}
+
+% --- References / links ---
+\usepackage{zcref_settings} % \zcref{} を使う
+\usepackage[all]{hypcap}
+
+% --- Units: siunitx ---
+\usepackage{siunitx}
+% 「ポイント(pt)」を \SI{11}{\point} のように使えるように定義
+\DeclareSIUnit{\point}{pt}
+\sisetup{
+  detect-all,          % フォント/ウェイト等を周囲に合わせる
+  per-mode = symbol,   % m/s のようにスラッシュ表記
+  range-phrase = {\,\text{--}\,}, % 例: 1--2
+  list-pair-separator = {,\,},
+  list-final-separator = {,\,},
+}
+
+% --- Lists: (1)(2)... を enumerate で ---
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=*, itemsep=0pt, topsep=0.25\baselineskip}
+
+% 図の [H] を使うなら（proceedings.cls 側で未定義の場合に備えて）
+\usepackage{float}
+\usepackage{biblatex-journal-style}
+
+\usepackage{csquotes}
+% bib は main 側で指定
+\addbibresource{reference.bib}
+
+\begin{document}
+
+\twocolumn[
+  \PaperTitle{卒業研究発表会　発表資料原稿作成見本}
+  \PaperAuthor{物理・システム工学コース　福島 太郎}
+  \PaperSummary{%
+    ここには，研究の要点を１５０字程度にまとめて記載して下さい．この幅で入力すると１行で約５０文字になりますので，１５０字では，約３行になります．この様式は岡沼教授の作成したものを基に，一部修正を加えました．研究室毎に，必要に応じて改変して利用して下さい．%
+  }
+]
+
+\AdvisorFootnote{○○○○教授または准教授}
+
+% --- Body ---
+\section{緒　　言}
+人間支援システム専攻卒業研究発表会における発表資料の作成については，指導教員または分野での指示に従って作成してください．その指示に従い，原則としてA4サイズの用紙に日本語で作成して下さい．内容として，研究の背景，目的，方法，得られた成果などを簡潔に記載して下さい．この文書様式は原稿フォーマットの一例を示したものです．なお，マイクロソフトワードで原稿を作成される場合は，このファイルをそのまま原稿にお使いになれば，マージンなどの設定は不要です．以下では，この文書様式におけるフォーマットの詳細を示します．
+
+\section{原稿執筆上の注意}
+
+\subsection{原稿サイズ}
+原稿はA4サイズ（\SI{297}{\milli\meter}\,$\times$\,\SI{210}{\milli\meter}）とし，ページ数は1, 2, 4ページ等，指導教員の指示に従って下さい．なお，原稿にはページ番号を記入しないで下さい．
+
+\subsection{マージン}
+A4用紙に，左右\SI{20}{\milli\meter}，上部\SI{25}{\milli\meter}，下部\SI{22}{\milli\meter}のマージンを確保し，この枠内に原稿を作成して下さい．本文は2段組とし，コラム幅\SI{80}{\milli\meter}，コラム間隔を\SI{10}{\milli\meter}として下さい．
+
+\subsection{題名，著者名}
+次の事項を本例に従って記載して下さい．
+\begin{enumerate}
+  \item 和文題名（\SI{15}{\point}）
+  \item 和文著者名（\SI{11}{\point}）
+\end{enumerate}
+題名は中央揃えとしますが，題名の頭には整理番号をつけることがありますので，左欄の端より\SI{30}{\milli\meter}以上空けて下さい．また，著者名は，所属先，氏名の順に，左欄の端より\SI{40}{\milli\meter}以上空けて記載して下さい．連名の場合は講演者(登壇者)に○印をつけて下さい．研究の要点を150字程度で題名・著者名のあとに\SI{9}{\point}で記載して下さい．原稿の最下部に，指導教員名を記載して下さい．
+
+\subsection{本文}
+本文は\SI{9}{\point}でご執筆下さい．1コラムの文字数は全角で25文字程度，行間隔は\SI{14}{\point}程度として下さい．したがって，1コラムあたり51行，1ページあたり約2500字です．参考文献は[1], [2], [3], のように番号をつけて，本文の最後にまとめて下さい（引用の例：\cite{2023ApJ...944..124T}）．サンプルを本フォーマットの最後に示します．
+
+\subsection{図表}
+図表を本文で引用する場合は，図(写真を含む)については，Fig.\,1，Fig.\,2のように，また表はTable\,1，Table\,2のように引用して下さい．なお，図表中の説明，キャプションは原則として英語とします．図・表どうし，あるいは図・表と本文は1行以上間隔をあけるようにして下さい．
+
+\section{PDFファイルの作成}
+執筆した原稿は配置が崩れないようにするためpdfファイルに変換して提出して下さい．変換に当たっては次の点にご注意下さい．
+\begin{enumerate}
+  \item pdfファイルにはフォントの埋め込みを行って下さい．これを行わないと，字体が変化する場合があります．
+  \item 変換したpdfファイルのサイズは\SI{2}{\mega\byte}以内として下さい．
+\end{enumerate}
+
+\section{原稿の提出}
+作成したpdfファイルは，指定日までに指導教員に提出して下さい．印刷した原稿をとりまとめて，資料集として配布します．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\linewidth]{./figures/diagram.jpg}
+  \caption{A sample of a figure}
+  \label{fig:test}
+\end{figure}
+
+\printbibliography
+\end{document}

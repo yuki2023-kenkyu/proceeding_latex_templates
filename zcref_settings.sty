@@ -1,0 +1,37 @@
+% zcref_settings.sty
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{zcref_settings}[2026/01/29 zref-clever settings for Japanese]
+
+% \RequirePackage{hyperref}    % リンクしたい場合
+\RequirePackage{zref-clever}
+
+% 日本語ラベルを宣言
+\zcDeclareLanguage{japanese}
+
+% 参照タイプ名（単数/複数を日本語では同一に）
+\zcLanguageSetup{japanese}{
+  type = figure,
+    name-sg = Fig.~,
+    name-pl = Figs.~,
+  type = table,
+    name-sg = Table,
+    name-pl = Tables,
+  type = equation,
+    name-sg = 式,
+    name-pl = 式,
+  type = section,
+    name-sg = 節,
+    name-pl = 節,
+  type = subsection,
+    name-sg = 節,
+    name-pl = 節,
+}
+
+% 全体設定（必要に応じて変更可）
+\zcsetup{
+  lang = japanese,
+  sort = true,
+  comp = true,
+  abbrev = false,
+  cap = false,
+}
