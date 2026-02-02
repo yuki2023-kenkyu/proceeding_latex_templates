@@ -1,0 +1,99 @@
+% packages_lualatex.sty
+% Common package bundle for proceedings.cls + LuaLaTeX projects
+% (Keep this file lightweight and avoid duplicating packages already loaded by proceedings.cls.)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages_lualatex}[2026/02/02 v1.1 common packages for LuaLaTeX proceedings]
+
+% ------------------------------------------------------------
+% Helper: load package only if not already loaded
+%   NOTE: do NOT use '@' in the public macro name (catcode issue outside \makeatletter)
+% ------------------------------------------------------------
+\makeatletter
+\newcommand*\plreqpkg[2][]{%
+  \@ifpackageloaded{#2}{}{%
+    \begingroup
+      \edef\pl@opt{#1}%
+      \if\relax\detokenize{#1}\relax
+        \endgroup\RequirePackage{#2}%
+      \else
+        \endgroup\RequirePackage[#1]{#2}%
+      \fi
+  }%
+}
+\makeatother
+
+% ------------------------------------------------------------
+% Typography / utilities (safe to load)
+% ------------------------------------------------------------
+\plreqpkg{microtype} % OK with LuaHBTeX; improves justification subtly
+\plreqpkg{csquotes}  % helps quote handling in biblatex titles etc.
+
+% ------------------------------------------------------------
+% Page style helpers (required by advisor footer in proceedings.cls)
+% ------------------------------------------------------------
+\plreqpkg{fancyhdr}
+
+% ------------------------------------------------------------
+% Units (siunitx)
+% ------------------------------------------------------------
+\plreqpkg{siunitx}
+\sisetup{
+  detect-all,
+  separate-uncertainty = true,
+  per-mode = symbol,
+  range-phrase = {\,\textendash\,},
+  range-units = single,
+}
+\DeclareSIUnit{\point}{pt}
+% ------------------------------------------------------------
+% Mathematics / physics
+% ------------------------------------------------------------
+\plreqpkg{amsmath}
+\plreqpkg{amssymb}
+\plreqpkg{amsthm}
+\plreqpkg{mathtools}  % extensions to amsmath
+% \mathtoolsset{showonlyrefs} % only number referenced equations
+\plreqpkg{bm}         % bold math
+\plreqpkg{physics2}   % user requirement: physics2 for in-math commands
+\plreqpkg{fixdif}     % upright d for differentials
+\plreqpkg{derivative} % \deriv, \pderiv etc.
+\plreqpkg{mathrsfs}   % script fonts
+
+% NOTE:
+% - breqn can be intrusive; keep it only if you actually use dmath/dgroup etc.
+% - autonum loads etextools, which is incompatible with biblatex in modern TeX Live.
+\plreqpkg{breqn}
+
+\plreqpkg[version=4]{mhchem} % chemistry/ion notation
+
+% ------------------------------------------------------------
+% Lists: enumerate with (1), (2), ...
+% ------------------------------------------------------------
+\plreqpkg{enumitem}
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=*, itemsep=0.2\baselineskip, topsep=0.2\baselineskip}
+
+% ------------------------------------------------------------
+% Floats / tables
+% ------------------------------------------------------------
+\plreqpkg{float} % for [H]
+\plreqpkg{booktabs}
+\plreqpkg{tabularx}
+\plreqpkg{multirow}
+
+% ------------------------------------------------------------
+% Cross-references (zref-based)
+% ------------------------------------------------------------
+% \plreqpkg{zref}
+% \plreqpkg{zref-clever}
+
+% ------------------------------------------------------------
+% Hyperlink helpers
+% IMPORTANT: proceedings.cls loads hyperref; do not reload it here.
+% ------------------------------------------------------------
+\plreqpkg[all]{hypcap}
+
+% If user has zcref_settings.sty, load it after hyperref so link targets are stable.
+% \plreqpkg{zcref_settings}
+\providecommand{\zlab}[1]{\label{#1}\zlabel{#1}}
+
+\endinput

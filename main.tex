@@ -1,32 +1,9 @@
 % !TeX program = lualatex
 \documentclass{proceedings}
-
-% --- References / links ---
-\usepackage{zcref_settings} % \zcref{} を使う
-\usepackage[all]{hypcap}
-
-% --- Units: siunitx ---
-\usepackage{siunitx}
-% 「ポイント(pt)」を \SI{11}{\point} のように使えるように定義
-\DeclareSIUnit{\point}{pt}
-\sisetup{
-  detect-all,          % フォント/ウェイト等を周囲に合わせる
-  per-mode = symbol,   % m/s のようにスラッシュ表記
-  range-phrase = {\,\text{--}\,}, % 例: 1--2
-  list-pair-separator = {,\,},
-  list-final-separator = {,\,},
-}
-
-% --- Lists: (1)(2)... を enumerate で ---
-\usepackage{enumitem}
-\setlist[enumerate,1]{label=(\arabic*), leftmargin=*, itemsep=0pt, topsep=0.25\baselineskip}
-
-% 図の [H] を使うなら（proceedings.cls 側で未定義の場合に備えて）
-\usepackage{float}
 \usepackage{biblatex-journal-style}
+\usepackage{packages_lualatex}
+\usepackage{zcref_settings}
 
-\usepackage{csquotes}
-% bib は main 側で指定
 \addbibresource{reference.bib}
 
 \begin{document}
@@ -35,7 +12,7 @@
   \PaperTitle{卒業研究発表会　発表資料原稿作成見本}
   \PaperAuthor{物理・システム工学コース　福島 太郎}
   \PaperSummary{%
-    ここには，研究の要点を１５０字程度にまとめて記載して下さい．この幅で入力すると１行で約５０文字になりますので，１５０字では，約３行になります．この様式は岡沼教授の作成したものを基に，一部修正を加えました．研究室毎に，必要に応じて改変して利用して下さい．%
+    ここには，研究の要点を150字程度にまとめて記載して下さい．この幅で入力すると1行で約50文字になりますので，150字では，約3行になります．この様式は岡沼教授の作成したものを基に，一部修正を加えました．研究室毎に，必要に応じて改変して利用して下さい．%
   }
 ]
 
@@ -73,6 +50,13 @@ A4用紙に，左右\SI{20}{\milli\meter}，上部\SI{25}{\milli\meter}，下部
   \item pdfファイルにはフォントの埋め込みを行って下さい．これを行わないと，字体が変化する場合があります．
   \item 変換したpdfファイルのサイズは\SI{2}{\mega\byte}以内として下さい．
 \end{enumerate}
+\section{数式\zlabel{sec:math}}
+数式はequation環境などの数式用の環境を用いて作成して下さい．数式番号は右揃えとし，本文中で参照する場合は(1)，(2)のように括弧をつけて参照して下さい．\LaTeX{}での数式の例を以下に示します．
+\begin{equation}
+  e^{i\pi} + 1 = 0\zlabel{eq:euler}
+\end{equation}
+\zcref{eq:euler}はオイラーの等式として知られています．
+\zcref{sec:math}では数式の記載方法について説明しました．
 
 \section{原稿の提出}
 作成したpdfファイルは，指定日までに指導教員に提出して下さい．印刷した原稿をとりまとめて，資料集として配布します．
@@ -80,7 +64,7 @@ A4用紙に，左右\SI{20}{\milli\meter}，上部\SI{25}{\milli\meter}，下部
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.49\linewidth]{./figures/diagram.jpg}
-  \caption{A sample of a figure}
+  \caption{A sample of a figure. This figure shows a diagram for testing figure inclusion. }
   \label{fig:test}
 \end{figure}
 

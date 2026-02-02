@@ -86,6 +86,7 @@
 % ========= Graphics / Captions =========
 \RequirePackage{graphicx}
 \RequirePackage{caption}
+\RequirePackage{fancyhdr} % for persistent advisor footer
 
 % Caption label format: "Figure 1." / "Table I."
 \renewcommand{\figurename}{Fig.}
@@ -120,7 +121,7 @@
 ]{biblatex}
 
 % If biblatex.cfg exists, read it
-% \InputIfFileExists{biblatex.cfg}{}{}
+\InputIfFileExists{biblatex.cfg}{}{}
 
 \setlength{\biblabelsep}{0.6em}
 
@@ -152,12 +153,41 @@
   \vspace{1.0\baselineskip}%
 }
 
-% Advisor footnote (no mark), lighter color
+% ---------- Advisor footer (shown on every page) ----------
+\newcommand*\ProceedingsAdvisorFooterSetup{%
+  \makeatletter
+  % Use a dedicated pagestyle so the advisor footer appears on every page.
+  \fancypagestyle{proceedings}{%
+    \fancyhf{}%
+    \renewcommand{\headrulewidth}{0pt}%
+    % We draw our own separator and text so we can control length/color.
+    \renewcommand{\footrulewidth}{0pt}%
+    % Left column aligned footer:
+    % - restrict to one \columnwidth so it visually sits in the left column
+    % - separator rule is ~half of the left column
+    % - rule color and text color are lighter than body text
+    \fancyfoot[L]{%
+      \begingroup
+        \color{black!60}%
+        \parbox[b]{\columnwidth}{%
+          \rule{.5\columnwidth}{0.4pt}\par
+          \vspace{0.2ex}%
+          {\fontsize{8pt}{10pt}\selectfont 指導教員：\@advisorname}%
+        }%
+      \endgroup
+    }%
+    \fancyfoot[C]{}%
+    \fancyfoot[R]{}%
+  }%
+  \makeatother
+}
+
+\newcommand*\@advisorname{} % set by \AdvisorFootnote
+
 \newcommand{\AdvisorFootnote}[1]{%
-  \begingroup
-  \renewcommand{\thefootnote}{}%
-  \footnotetext{\textcolor{black!60}{指導教員：#1}}%
-  \endgroup
+  \gdef\@advisorname{#1}%
+  \ProceedingsAdvisorFooterSetup%
+  \pagestyle{proceedings}%
 }
 
 % ============================================================

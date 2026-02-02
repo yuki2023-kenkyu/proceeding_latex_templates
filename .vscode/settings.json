@@ -99,7 +99,7 @@
         "-u",
         "-U",
         "--output_safechars",
-        "%DOCFILE%"
+        "%OUTDIR%/%DOCFILE%"
       ]
     }
   ],
