@@ -138,7 +138,7 @@
 
 % ========= Title block macros =========
 \newcommand{\PaperTitle}[1]{%
-  \par\centering{\fontsize{15pt}{18pt}\selectfont #1\par}%
+  \par\centering{\bfseries\fontsize{15pt}{18pt}\selectfont #1\par}%
   \vspace{0.4\baselineskip}%
 }
 \newcommand{\PaperAuthor}[1]{%
