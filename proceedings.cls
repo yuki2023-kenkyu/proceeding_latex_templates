@@ -98,7 +98,7 @@
   font=small,
   labelfont=bf,
   labelformat=simple,
-  labelsep=period
+  labelsep=space
 }
 
 % ========= No List of Figures/Tables =========
