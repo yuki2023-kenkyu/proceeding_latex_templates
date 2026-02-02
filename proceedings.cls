@@ -20,7 +20,7 @@
 \ProcessOptions\relax
 
 % --- Base class ---
-\LoadClass[a4paper,ja=minimal,lualatex]{bxjsarticle}
+\LoadClass[a4paper,ja=minimal,lualatex,oneside]{bxjsarticle}
 
 % ========= Fonts (LuaLaTeX) =========
 \RequirePackage{fontspec}
@@ -43,8 +43,9 @@
 \geometry{
   top=25mm,
   bottom=22mm,
-  left=20mm,
-  right=20mm
+  hmargin=20mm,
+  includehead,
+  includefoot
 }
 
 % ========= Two-column layout =========
@@ -74,14 +75,14 @@
   {\bfseries\fontsize{10.5pt}{14pt}\selectfont\filcenter}
   {\thesection}{1\zw}{}
 \titlespacing*{\section}
-  {0pt}{1.0\baselineskip}{0.4\baselineskip}
+  {0pt}{0.5\baselineskip}{0pt}
 
 % subsection: run-in; no extra blank line between subsections
 \titleformat{\subsection}[runin]
 {\bfseries\fontsize{9pt}{14pt}\selectfont}
 {\thesubsection}{1\zw}{}[\hspace*{1\zw}]
 \titlespacing*{\subsection}
-{0pt}{0pt}{0.4em}
+{0pt}{0pt}{0pt}
 
 % ========= Graphics / Captions =========
 \RequirePackage{graphicx}
