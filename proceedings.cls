@@ -122,7 +122,7 @@
 ]{biblatex}
 
 % If biblatex.cfg exists, read it
-\InputIfFileExists{biblatex.cfg}{}{}
+% \InputIfFileExists{biblatex.cfg}{}{}
 
 \setlength{\biblabelsep}{0.6em}
 

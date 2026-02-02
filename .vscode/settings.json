@@ -62,7 +62,7 @@
   "latex-workshop.latex.clean.method": "glob",
   "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.autoBuild.run": "onSave",
-  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.autoClean.run": "onSucceeded",
   "latex-workshop.latex.tools": [
     {
       "name": "lualatex",
