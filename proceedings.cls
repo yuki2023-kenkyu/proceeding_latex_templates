@@ -8,12 +8,33 @@
 % - Paragraph indent = 1 zw
 % - Section spacing: 1 blank line between sections; no extra blank line between subsections
 % - Advisor footnote in lighter color
+% - Optional Fukushima University Form 5 mark / footer suppression / right-aligned author / subtitle
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{proceedings}[2026/02/02 Proceedings class (LuaLaTeX + bxjsarticle)]
+\ProvidesClass{proceedings}[2026/09/28 Proceedings class (LuaLaTeX + bxjsarticle)]
 \ClassInfo{proceedings}{*** proceedings.cls LOADED ***}
 
-% --- Pass unknown options to bxjsarticle ---
+% ========= Proceedings-specific class options =========
+% Defaults deliberately preserve the behaviour of the original template.
+\newif\ifproceedings@formfive
+\newif\ifproceedings@advisorfooter
+\newif\ifproceedings@rightauthor
+\newif\ifproceedings@subtitle
+\proceedings@formfivefalse
+\proceedings@advisorfootertrue
+\proceedings@rightauthorfalse
+\proceedings@subtitlefalse
+
+% Put ``（様式５）'' at the upper-left position used by the supplied Word form.
+\DeclareOption{form5}{\proceedings@formfivetrue}
+% Suppress both the footer separator rule and the advisor text.
+\DeclareOption{noadvisorfooter}{\proceedings@advisorfooterfalse}
+% Right-align the student-number/name line produced by \PaperAuthor.
+\DeclareOption{rightauthor}{\proceedings@rightauthortrue}
+% Enable the optional subtitle produced by \PaperSubtitle.
+\DeclareOption{subtitle}{\proceedings@subtitletrue}
+
+% --- Pass all other options to bxjsarticle ---
 \DeclareOption*{%
   \PassOptionsToClass{\CurrentOption}{bxjsarticle}%
 }
@@ -88,6 +109,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{caption}
 \RequirePackage{fancyhdr} % for persistent advisor footer
+\RequirePackage{eso-pic}  % absolute first-page placement of the Form 5 mark
 
 % Caption label format: "Figure 1." / "Table I."
 \renewcommand{\figurename}{Fig.}
@@ -136,13 +158,46 @@
 % ========= Colors =========
 \RequirePackage{xcolor}
 
+% ========= Optional Form 5 mark =========
+% The supplied Word form uses A4 margins of 25 mm (left/right) and
+% 20 mm (top/bottom).  The mark is overlaid on page 1, so enabling it
+% does not push the title block or body downward.
+\newcommand*\ProceedingsFormFiveMark{%
+  \AddToShipoutPictureFG*{%
+    \AtPageUpperLeft{%
+      \put(\LenToUnit{25mm},-\LenToUnit{20mm}){%
+        \makebox(0,0)[lt]{\fontsize{10.5pt}{12pt}\selectfont （様式５）}%
+      }%
+    }%
+  }%
+}
+\ifproceedings@formfive
+  \AtBeginDocument{\ProceedingsFormFiveMark}%
+\fi
+
 % ========= Title block macros =========
 \newcommand{\PaperTitle}[1]{%
   \par\centering{\bfseries\fontsize{15pt}{18pt}\selectfont #1\par}%
-  \vspace{0.4\baselineskip}%
+  \ifproceedings@subtitle
+    \vspace{0.15\baselineskip}%
+  \else
+    \vspace{0.4\baselineskip}%
+  \fi
+}
+\newcommand{\PaperSubtitle}[1]{%
+  \ifproceedings@subtitle
+    \par\centering{\bfseries\fontsize{11pt}{14pt}\selectfont #1\par}%
+    \vspace{0.4\baselineskip}%
+  \fi
 }
 \newcommand{\PaperAuthor}[1]{%
-  \par\centering{\fontsize{11pt}{14pt}\selectfont #1\par}%
+  \par
+  \ifproceedings@rightauthor
+    \raggedleft
+  \else
+    \centering
+  \fi
+  {\fontsize{11pt}{14pt}\selectfont #1\par}%
   \vspace{1.0\baselineskip}%
 }
 \newcommand{\PaperSummary}[1]{%
@@ -187,8 +242,10 @@
 
 \newcommand{\AdvisorFootnote}[1]{%
   \gdef\@advisorname{#1}%
-  \ProceedingsAdvisorFooterSetup%
-  \pagestyle{proceedings}%
+  \ifproceedings@advisorfooter
+    \ProceedingsAdvisorFooterSetup%
+    \pagestyle{proceedings}%
+  \fi
 }
 
 % ============================================================

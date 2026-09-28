@@ -1,5 +1,10 @@
 % !TeX program = lualatex
-\documentclass{proceedings}
+\documentclass[
+  form5,
+  noadvisorfooter,
+  rightauthor,
+  subtitle
+]{proceedings}
 \usepackage{biblatex-journal-style}
 \usepackage{packages_lualatex}
 \usepackage{zcref_settings}
@@ -9,6 +14,7 @@
 \begin{document}
 \twocolumn[
   \PaperTitle{卒業研究発表会　発表資料原稿作成見本}
+  \PaperSubtitle{副題}
   \PaperAuthor{物理・システム工学コース　福島 太郎}
   \PaperSummary{%
     ここには，研究の要点を150字程度にまとめて記載して下さい．この幅で入力すると1行で約50文字になりますので，150字では，約3行になります．この様式は岡沼教授の作成したWordファイルを基に，\LaTeX{}用に一部修正を加えました．研究室毎に，必要に応じて改変して利用して下さい．%
