@@ -50,7 +50,10 @@
   // 出力先を root .tex から見た out/ に固定する。
   "latex-workshop.latex.outDir": "%DIR%/out",
   "latex-workshop.latex.auxDir": "%OUTDIR%",
-  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.recipe.default": "lualatex (biblatex+biber)",
+  // % !TeX program = ... があっても単一コンパイラ実行へ切り替えず、
+  // 必ず上記 recipe を使用する。
+  "latex-workshop.latex.build.forceRecipeUsage": true,
   "latex-workshop.latex.autoBuild.run": "onSave",
 
   // 自動 clean で .bcf/.bbl/.synctex.gz を消すと、Biber や SyncTeX の
