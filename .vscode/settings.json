@@ -3,7 +3,6 @@
     "editor.wordWrap": "on",
     // 日本語の単語区切りを設定
     "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?゠・，、；：！？．。‘’“”（）｟｠［］〚〛〔〕｛｝〈〉《》「」『』【】〖〗〝〟がてでとにのはへもやを",
-    //                                                          ↑ “?” までがデフォルトの構成  
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
@@ -15,28 +14,7 @@
       "strings": false
     },
     "editor.bracketPairColorization.enabled": true,
-    "editor.language.colorizedBracketPairs": [
-      // ["‘", "’"],
-      // ["“", "”"],
-      // ["(", ")"],
-      // ["（", "）"],
-      // ["｟", "｠"],
-      // ["[", "]"],
-      // ["［", "］"],
-      // ["〚", "〛"],
-      // ["〔", "〕"],
-      // ["{", "}"],
-      // ["｛", "｝"],
-      // ["〈", "〉"],
-      // ["《", "》"],
-      // ["「", "」"],
-      // ["『", "』"],
-      // ["【", "】"],
-      // ["〖", "〗"],
-      // ["〝", "〟"],
-      // ["`", "'"],
-      // ["``", "\""]
-    ],
+    "editor.language.colorizedBracketPairs": [],
     "editor.unicodeHighlight.invisibleCharacters": true,
     "editor.unicodeHighlight.allowedCharacters": {
       "，": true,
@@ -55,14 +33,31 @@
     "editor.stickyScroll.enabled": true,
     "files.trimTrailingWhitespace": true
   },
-  // https://qiita.com/fuku_uma/items/e5ad46125a9612320273
-  // https://everykalax.hateblo.jp/entry/2022/12/15/144238#%E4%BB%98%E9%8C%B2-BibLaTeX%E3%82%92%E4%BD%BF%E3%81%88%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B
-  // LaTeX Workshop ではビルド設定を「Tool」と「Recipe」という2つで考える
-  "latex-workshop.latex.outDir": "out",
-  "latex-workshop.latex.clean.method": "glob",
+
+  "[tex]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.tabSize": 2
+  },
+
+  "[bibtex]": {
+    "editor.wordWrap": "off",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true
+  },
+
+  // LaTeX Workshop: build
+  // 出力先を root .tex から見た out/ に固定する。
+  "latex-workshop.latex.outDir": "%DIR%/out",
+  "latex-workshop.latex.auxDir": "%OUTDIR%",
   "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.autoBuild.run": "onSave",
-  "latex-workshop.latex.autoClean.run": "onSucceeded",
+
+  // 自動 clean で .bcf/.bbl/.synctex.gz を消すと、Biber や SyncTeX の
+  // 再利用性が落ちるため、clean は手動実行にする。
+  "latex-workshop.latex.autoClean.run": "never",
+  "latex-workshop.latex.clean.method": "glob",
+
   "latex-workshop.latex.tools": [
     {
       "name": "lualatex",
@@ -93,16 +88,12 @@
       "name": "biber",
       "command": "biber",
       "args": [
-        "--input-directory=%OUTDIR%",
         "--output-directory=%OUTDIR%",
-        "--bblencoding=utf8",
-        "-u",
-        "-U",
-        "--output_safechars",
-        "%OUTDIR%/%DOCFILE%"
+        "%DOCFILE%"
       ]
     }
   ],
+
   "latex-workshop.latex.recipes": [
     {
       "name": "lualatex (biblatex+biber)",
@@ -123,6 +114,7 @@
       ]
     }
   ],
+
   "latex-workshop.latex.clean.fileTypes": [
     "%DOCFILE%.aux",
     "%DOCFILE%.bbl",
@@ -145,20 +137,13 @@
     "_minted-*/**",
     "_minted-*/"
   ],
+
+  // PDF / SyncTeX
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.synctex.afterBuild.enabled": true,
-  "[tex]": {
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.tabSize": 2
-  },
-  //https://qiita.com/Yarakashi_Kikohshi/items/8f720643543ba175f7cc
-  "[bibtex]": {
-    "editor.wordWrap": "off",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "files.trimTrailingWhitespace": true
-  },
-  "latex-workshop.intellisense.citation.maxfilesizeMB": 5,
+
+  // Citation / label completion
+  "latex-workshop.bibtex.maxFileSize": 5,
   "latex-workshop.intellisense.citation.backend": "biblatex",
   "latex-workshop.intellisense.citation.label": "title",
   "latex-workshop.intellisense.citation.type": "inline",
@@ -173,10 +158,14 @@
   "latex-workshop.intellisense.label.command": [
     "label",
     "linelabel",
-    "zlabel", // <-- これを追加
+    "zlabel"
   ],
+  "latex-workshop.intellisense.package.enabled": true,
+
+  // BibTeX / BibLaTeX formatting
   "latex-workshop.bibtex-format.tab": "2 spaces",
-  "latex-workshop.bibtex-format.case": "lowercase",
+  "latex-workshop.bibtex-format.case.type": "lowercase",
+  "latex-workshop.bibtex-format.case.field": "lowercase",
   "latex-workshop.bibtex-format.surround": "Curly braces",
   "latex-workshop.bibtex-format.trailingComma": true,
   "latex-workshop.bibtex-format.handleDuplicates": "Comment Duplicates",
@@ -195,13 +184,5 @@
   "latex-workshop.bibtex-format.sort.enabled": true,
   "latex-workshop.bibtex-format.sortby": [
     "key"
-  ],
-  "latex-workshop.intellisense.package.enabled": true,
-  "editor.unicodeHighlight.allowedCharacters": {
-    "，": true,
-    "．": true
-  },
-  "latex-workshop.latex.recipe.default": "first",
-  "latex-workshop.synctex.afterBuild.enabled": true,
-  "latex-workshop.bibtex.engine": "biber",
+  ]
 }
